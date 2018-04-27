@@ -1,3 +1,8 @@
+/*
+ * Code latest updated 27/04/18 10:43.
+ * Copyright © 2018.  By Elias Renman. All rights reserved
+ */
+
 package com.bullethell.characters;
 import com.bullethell.bulletTypes.BouncingBullet;
 import com.bullethell.bulletTypes.Bullet;

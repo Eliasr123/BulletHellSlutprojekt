@@ -1,3 +1,8 @@
+/*
+ * Code latest updated 26/04/18 21:52.
+ * Copyright © 2018.  By Elias Renman. All rights reserved
+ */
+
 package com.bullethell.characters;
 
 import com.bullethell.bulletTypes.Bullet;

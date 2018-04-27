@@ -1,3 +1,8 @@
+/*
+ * Code latest updated 27/04/18 10:28.
+ * Copyright © 2018.  By Elias Renman. All rights reserved
+ */
+
 package com.bullethell.bulletTypes;
 
 import com.bullethell.characters.HittableObjects;
