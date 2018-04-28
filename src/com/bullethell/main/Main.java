@@ -1,5 +1,5 @@
 /*
- * Code latest updated 28/04/18 17:58.
+ * Code latest updated 28/04/18 19:05.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
@@ -135,8 +135,6 @@ public class Main extends JFrame {
             }
         };
         new Thread(run).start();
-
-
     }
     public class Key implements KeyListener {
         @Override
@@ -145,7 +143,6 @@ public class Main extends JFrame {
         public void keyPressed(KeyEvent e){
             player1.keyPressed(e);
         }
-
         @Override
         public void keyReleased(KeyEvent e) {
             player1.keyReleased(e);

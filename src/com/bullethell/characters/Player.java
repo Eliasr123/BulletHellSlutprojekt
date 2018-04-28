@@ -1,5 +1,5 @@
 /*
- * Code latest updated 28/04/18 17:58.
+ * Code latest updated 29/04/18 00:13.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
@@ -102,7 +102,7 @@ public class Player extends HittableObjects implements Runnable {
         xDirection = xDir;
     }
     public void resetHealth() {
-        setHealth(15);
+        setHealth(10);
     }
     private void move() {
         //Movement handling.

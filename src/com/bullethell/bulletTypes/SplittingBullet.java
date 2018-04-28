@@ -1,18 +1,13 @@
 /*
- * Code latest updated 28/04/18 17:58.
+ * Code latest updated 28/04/18 23:03.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
-
 package com.bullethell.bulletTypes;
-
 import com.bullethell.characters.HittableObjects;
 import com.bullethell.main.Main;
 import java.awt.*;
-
 import static java.lang.Math.ceil;
-
-
 public class SplittingBullet extends Bullet {
     private Main main;
     private int ticks;
