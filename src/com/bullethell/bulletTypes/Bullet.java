@@ -1,30 +1,20 @@
 /*
- * Code latest updated 26/04/18 21:52.
- * Copyright © 2018.  By Elias Renman. All rights reserved
+ * Code latest updated 28/04/18 17:58.
+ * Written  By Elias Renman.
+ * Copyright © 2018.
  */
-
 package com.bullethell.bulletTypes;
-
 import com.bullethell.characters.HittableObjects;
 
 import java.awt.*;
-
-
 public class Bullet {
-
     //Global variables
     int x, y, xDirection, yDirection;
     public int damage;
     public Color bColor;
     public HittableObjects origin;
-    //Score
-    int p1Score, p2Score;
-
-
     public Rectangle bCoordinates;
-
     public Bullet(int x, int y, int xDir, int yDir,int width, int height,Color bColor,HittableObjects origin,int damage){
-        p1Score = p2Score = 0;
         this.x = x;
         this.y = y;
         this.bColor = bColor;
@@ -35,24 +25,14 @@ public class Bullet {
         //Create 'bCoordinates'
         bCoordinates = new Rectangle(this.x, this.y, width, height);
     }
-    public void setXDirection(int xdir){
+    protected void setXDirection(int xdir){
         xDirection = xdir;
     }
-    public void setYDirection(int ydir){
+    protected void setYDirection(int ydir){
         yDirection = ydir;
     }
-
-    public void draw(Graphics g){
-        g.setColor(Color.CYAN);
-        g.fillOval(bCoordinates.x, bCoordinates.y, bCoordinates.width, bCoordinates.height);
-
-
-    }
     public void move(){
-
         bCoordinates.x += xDirection;
         bCoordinates.y += yDirection;
-
     }
-
 }

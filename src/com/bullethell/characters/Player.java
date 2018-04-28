@@ -1,17 +1,14 @@
 /*
- * Code latest updated 27/04/18 10:35.
- * Copyright © 2018.  By Elias Renman. All rights reserved
+ * Code latest updated 28/04/18 17:58.
+ * Written  By Elias Renman.
+ * Copyright © 2018.
  */
-
 package com.bullethell.characters;
-
 import com.bullethell.bulletTypes.BouncingBullet;
 import com.bullethell.main.Main;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-
-
 public class Player extends HittableObjects implements Runnable {
     //Global Variables
     int playerXPos, playerYPos;
@@ -29,7 +26,6 @@ public class Player extends HittableObjects implements Runnable {
         this.playerYPos = playerYPos;
         coordinates = new Rectangle(playerXPos, playerYPos, 8, 8);
     }
-
     /**Player Bullet Thread for*/
     public void startPlayerBulletThread() {
         Runnable run = new Runnable() {
@@ -41,70 +37,74 @@ public class Player extends HittableObjects implements Runnable {
         };
         new Thread(run).start();
     }
-
-
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == e.VK_LEFT) {
-            setXDirection(-1);
-        }
-        if (e.getKeyCode() == e.VK_RIGHT) {
-            setXDirection(1);
-        }
-        if (e.getKeyCode() == e.VK_UP) {
-            setYDirection(-1);
-        }
-        if (e.getKeyCode() == e.VK_DOWN) {
-            setYDirection(+1);
-        }
-        if (e.getKeyCode() == e.VK_SHIFT) {
-            cycles = 16;
-        }
-        if (e.getKeyCode() == e.VK_Z) {
-            bulletType = 1;
-
-        }
-        if (e.getKeyCode() == e.VK_X) {
-            bulletType = 2;
-
-        }
-        if (e.getKeyCode() == e.VK_C) {
-            bulletType = 3;
-
+        if (!main.gamePaused) {
+            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                setXDirection(-1);
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                setXDirection(1);
+            }
+            if (e.getKeyCode() == KeyEvent.VK_UP) {
+                setYDirection(-1);
+            } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                setYDirection(+1);
+            }
+            if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+                cycles = 16;
+            }
+            if (e.getKeyCode() == KeyEvent.VK_Z) {
+                bulletType = 1;
+            } else if (e.getKeyCode() == KeyEvent.VK_X) {
+                bulletType = 2;
+            } else if (e.getKeyCode() == KeyEvent.VK_C) {
+                bulletType = 3;
+            }
         }
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            main.gamePaused = true;
-            main.gameStateManager.gamePause();
+            if (main.gameStateI == 1 && !main.gamePaused) {
+                main.gamePaused = true;
+            } else {
+                System.exit(0);
+            }
+        }
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (main.gameStateI == 0) {
+                main.gameStateI = 1;
+                main.gamePaused = false;
+            }else if (main.gameStateI == 1){
+                if (main.gamePaused) {
+                    main.gamePaused = false;
+                }
+            }
+        }
+        if (main.gameStateI != 0 && e.getKeyCode() == KeyEvent.VK_R && main.gamePaused) {
+            main.gameState.resetVariables();
         }
     }
-
     public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == e.VK_SHIFT) {
+        if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
             cycles = 6;
         }
-        if (e.getKeyCode() == e.VK_LEFT || e.getKeyCode() == e.VK_RIGHT) {
+        if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT) {
             setXDirection(0);
         }
-        if (e.getKeyCode() == e.VK_UP || e.getKeyCode() == e.VK_DOWN) {
+        if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN) {
             setYDirection(0);
         }
-        if (e.getKeyCode() == e.VK_Z || e.getKeyCode() == e.VK_X || e.getKeyCode() == e.VK_C) {
+        if (e.getKeyCode() == KeyEvent.VK_Z || e.getKeyCode() == KeyEvent.VK_X || e.getKeyCode() == KeyEvent.VK_C) {
             bulletType = 0;
         }
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {}
     }
-
-    private void setYDirection(int ydir) {
-        yDirection = ydir;
+    private void setYDirection(int yDir) {
+        yDirection = yDir;
     }
-
-    private void setXDirection(int xdir) {
-        xDirection = xdir;
+    private void setXDirection(int xDir) {
+        xDirection = xDir;
     }
     public void resetHealth() {
         setHealth(15);
     }
-
-    public void move() {
+    private void move() {
         //Movement handling.
         coordinates.y += yDirection;
         coordinates.x += xDirection;
@@ -119,7 +119,6 @@ public class Player extends HittableObjects implements Runnable {
         if (coordinates.x >= 390 + borderXY)
             coordinates.x = 390 + borderXY;
     }
-
     public void draw(Graphics g) {
         if (xDirection == -1) {
             g.drawImage(leftP, coordinates.x - 21, coordinates.y - 20, 50, 50, null);
@@ -131,7 +130,6 @@ public class Player extends HittableObjects implements Runnable {
         g.setColor(new Color(255, 255, 255, 200));
         g.fillOval(coordinates.x, coordinates.y, coordinates.width, coordinates.height);
     }
-
     @Override
     public void run() {
         while (main.running) {

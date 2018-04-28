@@ -1,6 +1,7 @@
 /*
- * Code latest updated 27/04/18 12:48.
- * Copyright © 2018.  By Elias Renman. All rights reserved
+ * Code latest updated 28/04/18 17:58.
+ * Written  By Elias Renman.
+ * Copyright © 2018.
  */
 
 package com.bullethell.main;
@@ -32,31 +33,36 @@ public class Main extends JFrame {
     // player object true boolean for hittable
     protected Player player1;
     public BulletManager bulletManager = new BulletManager(this);
-    public GameStateManager gameStateManager = new GameStateManager(this);
+    public GameState gameState = new GameState(this);
+    protected Menu menu = new Menu(this);
     //Variables for screen size
     int GWIDTH = 900, GHEIGHT = 700;
     //Dimension of GWIDTH*GHEIGHT
     Dimension screenSize = new Dimension(GWIDTH, GHEIGHT);
     //the program isnt running yet
     public boolean running = true;
-    public boolean gamePaused = false;
-    //is game over?
-    private int gameOver = 0;
+    public boolean gamePaused = true;
+    // what game state is the game in
+    public int gameStateI = 0;
+    //break bullet loops
+    public boolean patternBreak = false;
+    //games name
+    public String gamesName = "placeHolder";
     //main code that starts everything
     public static void main(String[] args){
             new Main();
     }
     //Create constructor to spawn window
     public Main(){
-        this.setTitle("Placeholder");
+        this.setTitle(gamesName);
         this.setSize(screenSize);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.setBackground(Color.GRAY);
         this.addKeyListener(new Key());
-        gameStateManager.gameReset();
-        gameStateManager.gameRunning();
+        gameState.initiate();
+        gameState.running();
     }
     protected void draw() {
         //Add all the new bullets that were spawned so they can drawn and moved.
@@ -65,7 +71,6 @@ public class Main extends JFrame {
         //Creates a new separate bullet ArrayList to use for drawing to deal with concurrent modification.
         ArrayList<Bullet> bulletToDraw = new ArrayList<Bullet>();
         bulletToDraw.addAll(bulletTracker);
-
         Runnable run = new Runnable() {
             public void run() {
                 dbImage = createImage(getWidth(), getHeight());
@@ -86,15 +91,26 @@ public class Main extends JFrame {
                 /** Sidemenu overlay */
                 dbg.setColor(Color.WHITE);
                 dbg.setFont((new Font("TimesRoman",Font.BOLD,35)));
-                dbg.drawString(player1.getHealth()+ "" , 578, 146);
-                dbg.drawString("Enemy HP "+ enemy1.getHealth(), 470, 100);
+                if (gameStateI > 0) {
+                    dbg.drawString("Enemy HP "+ enemy1.getHealth(), 470, 100);
+                    dbg.drawString( "Player  HP "+player1.getHealth() , 470, 146);
+                }
+                if (gamePaused) {
+                    if (gameStateI == 0) {
+                        menu.drawStart(dbg);
+                    } else if (gameStateI == 1) {
+                        menu.drawPause(dbg);
+                    } else {
+                        menu.drawEnd(dbg);
+                    }
+                }
                 getGraphics().drawImage(dbImage, 0, 0, null);
                 bulletToDraw.clear();
             }
         };
         new Thread(run).start();
     }
-    protected void collision(HittableObjects hittable, ArrayList<Bullet> colisionTracker){
+    void collision(HittableObjects hittable, ArrayList<Bullet> colisionTracker){
         Runnable run = new Runnable() {
             public void run() {
                 for (Bullet bullet : colisionTracker) {
@@ -112,12 +128,8 @@ public class Main extends JFrame {
                     }
                 }
                 if (hittable.getHealth() <= 0){
-                    if (gameOver == 1) {
-                        System.exit(0);
-                    }
-                    gameOver++;
+                    gameStateI=2;
                     gamePaused = true;
-                    gameStateManager.gamePause();
                     System.out.println(hittable.getClass().getName()+ " got game over");
                 }
             }

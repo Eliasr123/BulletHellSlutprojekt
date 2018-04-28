@@ -1,6 +1,7 @@
 /*
- * Code latest updated 27/04/18 11:19.
- * Copyright © 2018.  By Elias Renman. All rights reserved
+ * Code latest updated 28/04/18 18:01.
+ * Written  By Elias Renman.
+ * Copyright © 2018.
  */
 
 package com.bullethell.main;
@@ -8,6 +9,7 @@ import com.bullethell.bulletTypes.Bullet;
 import com.bullethell.characters.Enemy;
 import com.bullethell.characters.Player;
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class GameStateManager {
@@ -39,20 +41,7 @@ public class GameStateManager {
         //initially draw the canvas
         main.draw();
         //Creates enemy
-        main.enemy1.startMovement();
-    }
-    public void gamePause() {
-        int choice = JOptionPane.showConfirmDialog(null, "restart game with yes, quit game with no, and unpause with cancel");
-
-        if (choice == 0){
-            gameResetVariables();
-        } else if (choice == 1){
-            System.out.println("game quitting");
-            System.exit(0);
-        } else  {
-            main.gamePaused = false;
-        }
-
+        main.enemy1.startThread();
     }
     //Main loop
     protected void gameRunning() {
@@ -62,20 +51,22 @@ public class GameStateManager {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            main.draw();
             if (!main.gamePaused) {
-                main.draw();
+                //main.draw();
                 /**Checks colision, the array is to avoid concurrent modification.*/
                 ArrayList<Bullet> collisionTracker = new ArrayList<>();
                 collisionTracker.addAll(main.bulletTracker);
                 main.collision(main.enemy1, collisionTracker);
                 main.collision(main.player1, collisionTracker);
-                try {
-                    Thread.sleep(8);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
                 //update bullets coordinates
                 main.bulletManager.updateBullet();
+            }
+            try {
+                Thread.sleep(8);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
 

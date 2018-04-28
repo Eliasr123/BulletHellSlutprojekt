@@ -1,8 +1,8 @@
 /*
- * Code latest updated 27/04/18 10:43.
- * Copyright © 2018.  By Elias Renman. All rights reserved
+ * Code latest updated 28/04/18 17:58.
+ * Written  By Elias Renman.
+ * Copyright © 2018.
  */
-
 package com.bullethell.characters;
 import com.bullethell.bulletTypes.BouncingBullet;
 import com.bullethell.bulletTypes.Bullet;
@@ -10,7 +10,6 @@ import com.bullethell.bulletTypes.SplittingBullet;
 import com.bullethell.main.Main;
 import javax.swing.*;
 import java.awt.*;
-
 public class Enemy extends HittableObjects {
     //Global Variables
     private  Image eIcon = new ImageIcon("resource/characters/Enemy.png").getImage();
@@ -20,22 +19,17 @@ public class Enemy extends HittableObjects {
     private Main main;
     private int xOffset = 25;
     private int yOffset = 50;
-    private int splittingShotReady = 10;
+    public int splittingShotReady = 10;
     //Enemy object
     public Enemy(int enemyX, int enemyY, Main main) {
-            this.main = main;
-            resetHealth();
-            coordinates = new Rectangle(enemyX, enemyY,50,50);
+        resetHealth();
+        this.main = main;
+        coordinates = new Rectangle(enemyX, enemyY,50,50);
         }
         //This starts a thread and handles movement
-    public void startMovement() {
+    public void startThread() {
         Runnable run = new Runnable() {
             public void run() {
-                try {
-                    Thread.sleep(1700);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 while(main.running) {
                     if (!main.gamePaused) {
                         move();
@@ -161,11 +155,13 @@ public class Enemy extends HittableObjects {
             main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, 0, -3, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
             main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, -1, -2, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
             main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, -2, -1, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
-
             try {
                 Thread.sleep(70);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+            if (main.gamePaused && main.patternBreak) {
+                break;
             }
         }
         try {
@@ -187,6 +183,9 @@ public class Enemy extends HittableObjects {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            if (main.gamePaused && main.patternBreak) {
+                break;
+            }
         }
         try {
             Thread.sleep(200);
@@ -198,5 +197,4 @@ public class Enemy extends HittableObjects {
         int bSizeXY = 20;
         main.bulletManager.addBullet(new SplittingBullet(coordinates.x+xOffset-(bSizeXY/2),coordinates.y + yOffset,0,3,bSizeXY,bSizeXY,Color.magenta,this,damageNormal,main,15));
     }
-
 }

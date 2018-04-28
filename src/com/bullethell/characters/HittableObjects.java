@@ -1,6 +1,7 @@
 /*
- * Code latest updated 26/04/18 21:52.
- * Copyright © 2018.  By Elias Renman. All rights reserved
+ * Code latest updated 28/04/18 17:58.
+ * Written  By Elias Renman.
+ * Copyright © 2018.
  */
 
 package com.bullethell.characters;
@@ -9,11 +10,11 @@ import com.bullethell.bulletTypes.Bullet;
 
 import java.awt.*;
 
-public class HittableObjects {
+public abstract class HittableObjects {
     private int health;
     public Rectangle coordinates;
     public int getHealth() {
-        return health;
+            return health;
     }
     public void isHit(Bullet bullet) {
         this.health = this.health-bullet.damage;

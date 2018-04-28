@@ -1,6 +1,7 @@
 /*
- * Code latest updated 27/04/18 10:28.
- * Copyright © 2018.  By Elias Renman. All rights reserved
+ * Code latest updated 28/04/18 17:58.
+ * Written  By Elias Renman.
+ * Copyright © 2018.
  */
 
 package com.bullethell.bulletTypes;
@@ -13,7 +14,6 @@ import static java.lang.Math.ceil;
 
 
 public class SplittingBullet extends Bullet {
-
     private Main main;
     private int ticks;
     private int initialTicks;
@@ -32,14 +32,10 @@ public class SplittingBullet extends Bullet {
                         super.bCoordinates.width -4,super.bCoordinates.height -4,super.bColor,origin,damage,main,ticks));
                 main.bulletManager.addBullet(new SplittingBullet(super.bCoordinates.x, super.bCoordinates.y, 2,0,
                         super.bCoordinates.width -4, super.bCoordinates.height -4,super.bColor,origin,damage,main,ticks));
-
-
                 main.bulletManager.addBullet(new SplittingBullet(super.bCoordinates.x, super.bCoordinates.y, -1,1,
                         super.bCoordinates.width -4, super.bCoordinates.height -4,super.bColor,origin,damage,main,ticks));
                 main.bulletManager.addBullet(new SplittingBullet(super.bCoordinates.x, super.bCoordinates.y, 1,1,
                         super.bCoordinates.width -4, super.bCoordinates.height -4,super.bColor,origin,damage,main,ticks));
-
-
                 main.bulletManager.addBullet(new SplittingBullet(super.bCoordinates.x, super.bCoordinates.y, 0,2,
                         super.bCoordinates.width -4, super.bCoordinates.height -4,super.bColor,origin,damage,main,ticks));
                 main.bulletManager.addBullet(new SplittingBullet(super.bCoordinates.x, super.bCoordinates.y, 0,-2,
@@ -49,8 +45,6 @@ public class SplittingBullet extends Bullet {
                         super.bCoordinates.width -4, super.bCoordinates.height -4,super.bColor,origin,damage,main,ticks));
                 main.bulletManager.addBullet(new SplittingBullet(super.bCoordinates.x, super.bCoordinates.y, 1,-1,
                         super.bCoordinates.width -4, super.bCoordinates.height -4,super.bColor,origin,damage,main,ticks));
-
-
             }
             if (super.bCoordinates.width > 9 && super.bCoordinates.height > 9){
                 main.bulletTrackerKilled.add(this);
