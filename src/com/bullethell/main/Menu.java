@@ -1,5 +1,5 @@
 /*
- * Code latest updated 29/04/18 00:13.
+ * Code latest updated 29/04/18 15:30.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
@@ -21,13 +21,11 @@ class Menu {
         this.main = main;
     }
     void drawStart(Graphics g) {
-
         int width = 400;
         int height = 500;
         int heightModif =100;
         g.setColor(menuBackground);
         g.fillRect(xPos[main.gameStateI],yPos[main.gameStateI],width,height-heightModif);
-
         g.setColor(Color.BLACK);
         g.setFont(fontTiny);
         g.drawString("This game is was made as a school project and is",xPos[main.gameStateI]+5,yPos[main.gameStateI]+50);
@@ -59,7 +57,7 @@ class Menu {
         g.drawString("Game Paused",xPos[main.gameStateI]+85,yPos[main.gameStateI]+30);
         g.drawString(" Press",xPos[main.gameStateI]+(width/2)-57,yPos[main.gameStateI]+height-33);
         g.setFont(fontSmall);
-        g.drawString("Escape to Quit   R to restart   Enter to continue",xPos[main.gameStateI]+5,yPos[main.gameStateI]+height-5);
+        g.drawString("Esc  to Quit       R to restart   Enter to continue",xPos[main.gameStateI]+5,yPos[main.gameStateI]+height-5);
     }
     void drawEnd(Graphics g) {
         int width = 400;

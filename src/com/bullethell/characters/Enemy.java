@@ -1,5 +1,5 @@
 /*
- * Code latest updated 28/04/18 17:56.
+ * Code latest updated 29/04/18 13:05.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
@@ -13,7 +13,6 @@ import java.awt.*;
 public class Enemy extends HittableObjects {
     //Global Variables
     private  Image eIcon = new ImageIcon("resource/characters/Enemy.png").getImage();
-    private int xDirection,yDirection;
     private int damageNormal = 1;
     public Rectangle newCoordinates = null;
     private Main main;
@@ -65,6 +64,7 @@ public class Enemy extends HittableObjects {
             newCoordinates = pickMoveLocation();
             chooseAttack();
         } else {
+            int xDirection;
             if (newCoordinates.x > coordinates.x) {
                 xDirection = 1;
             } else if (newCoordinates.x < coordinates.x) {
@@ -72,6 +72,7 @@ public class Enemy extends HittableObjects {
             } else {
                 xDirection = 0;
             }
+            int yDirection;
             if (newCoordinates.y > coordinates.y) {
                 yDirection = 1;
             } else if (newCoordinates.y < coordinates.y) {
@@ -135,7 +136,6 @@ public class Enemy extends HittableObjects {
             main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, 0, 3, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
             main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, -1, 2, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
             main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, -2, 1, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
-
             /** upward bullets */
             main.bulletManager.addBullet(new Bullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, 4, 0, bSizeXY, bSizeXY, color[cModify], this, damageStrong));
             main.bulletManager.addBullet(new Bullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, -4, 0, bSizeXY, bSizeXY, color[cModify], this, damageStrong));
@@ -160,6 +160,7 @@ public class Enemy extends HittableObjects {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            //makes the enemy stop shooting if its in the middle of a pattern
             if (main.gamePaused && main.patternBreak) {
                 break;
             }

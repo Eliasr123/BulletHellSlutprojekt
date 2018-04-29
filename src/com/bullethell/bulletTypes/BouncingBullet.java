@@ -1,11 +1,10 @@
 /*
- * Code latest updated 28/04/18 14:54.
+ * Code latest updated 29/04/18 12:55.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
 package com.bullethell.bulletTypes;
 import com.bullethell.characters.HittableObjects;
-
 import java.awt.*;
 public class BouncingBullet extends Bullet {
     private boolean xBounce;
@@ -20,7 +19,7 @@ public class BouncingBullet extends Bullet {
         bCoordinates.y += yDirection;
         int xMax = 440;
         int xMin = 50;
-        if (((bCoordinates.x + xDirection) <= (Math.abs(xDirection) + xMin)) || (bCoordinates.x + xDirection) >= xMax && xBounce == true) {
+        if (((bCoordinates.x + xDirection) <= (Math.abs(xDirection) + xMin)) || (bCoordinates.x + xDirection) >= xMax && xBounce) {
             if(xDirection > 0) {
                 xDirection = -xDirection;
             } else {
@@ -28,7 +27,7 @@ public class BouncingBullet extends Bullet {
             }
         }
         int yMin = 50;
-        if (((bCoordinates.y + yDirection) <= (Math.abs(yDirection) + yMin)) && yBounce == true) {
+        if (((bCoordinates.y + yDirection) <= (Math.abs(yDirection) + yMin)) && yBounce) {
             yDirection = Math.abs(yDirection);
         }
     }

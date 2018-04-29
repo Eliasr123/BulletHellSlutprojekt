@@ -1,5 +1,5 @@
 /*
- * Code latest updated 28/04/18 23:59.
+ * Code latest updated 29/04/18 15:28.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
@@ -7,10 +7,9 @@ package com.bullethell.main;
 import com.bullethell.bulletTypes.Bullet;
 import com.bullethell.characters.Enemy;
 import com.bullethell.characters.Player;
-
 import java.util.ArrayList;
 public class GameState {
-    Main main;
+    private Main main;
     GameState(Main main) {
         this.main = main;
     }
@@ -54,9 +53,8 @@ public class GameState {
             main.draw();
             if (!main.gamePaused) {
                 //main.draw();
-                /**Checks colision, the array is to avoid concurrent modification.*/
-                ArrayList<Bullet> collisionTracker = new ArrayList<>();
-                collisionTracker.addAll(main.bulletTracker);
+                /**Checks collision, the array is to avoid concurrent modification.*/
+                ArrayList<Bullet> collisionTracker = main.bulletTracker;
                 main.collision(main.enemy1, collisionTracker);
                 main.collision(main.player1, collisionTracker);
                 //update bullets coordinates

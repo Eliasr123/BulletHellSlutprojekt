@@ -1,5 +1,5 @@
 /*
- * Code latest updated 28/04/18 23:03.
+ * Code latest updated 29/04/18 12:58.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
@@ -35,7 +35,6 @@ public class SplittingBullet extends Bullet {
                         super.bCoordinates.width -4, super.bCoordinates.height -4,super.bColor,origin,damage,main,ticks));
                 main.bulletManager.addBullet(new SplittingBullet(super.bCoordinates.x, super.bCoordinates.y, 0,-2,
                         super.bCoordinates.width -4, super.bCoordinates.height -4,super.bColor,origin,damage,main,ticks));
-
                 main.bulletManager.addBullet(new SplittingBullet(super.bCoordinates.x, super.bCoordinates.y, -1,-1,
                         super.bCoordinates.width -4, super.bCoordinates.height -4,super.bColor,origin,damage,main,ticks));
                 main.bulletManager.addBullet(new SplittingBullet(super.bCoordinates.x, super.bCoordinates.y, 1,-1,

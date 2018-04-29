@@ -1,5 +1,5 @@
 /*
- * Code latest updated 28/04/18 19:05.
+ * Code latest updated 29/04/18 15:30.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
@@ -9,37 +9,33 @@ import com.bullethell.bulletTypes.Bullet;
 import com.bullethell.characters.Enemy;
 import com.bullethell.characters.HittableObjects;
 import com.bullethell.characters.Player;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import javax.swing.*;
-
 public class Main extends JFrame {
-
     //Double buffering
-    Image dbImage;
-    Graphics dbg;
-    //playingfield graphics
-    Image OverlayImage = new ImageIcon("resource/playingfield/BackgroundImg.png").getImage();
-    Image PlayFieldImage = new ImageIcon("resource/playingfield/PlayField.png").getImage();
+    private Image dbImage;
+    private Graphics dbg;
+    //playing field graphics
+    private Image OverlayImage = new ImageIcon("resource/playingfield/BackgroundImg.png").getImage();
+    private Image PlayFieldImage = new ImageIcon("resource/playingfield/PlayField.png").getImage();
     //Bullet objects
     public ArrayList<Bullet> bulletTrackerKilled = new ArrayList<>();
-    protected ArrayList<Bullet> bulletTracker = new ArrayList<>();
-    protected ArrayList<Bullet> bulletNew = new ArrayList<>();
-    //Enemy object false boolean for hittable
-    protected Enemy enemy1;
-    // player object true boolean for hittable
-    protected Player player1;
+    ArrayList<Bullet> bulletTracker = new ArrayList<>();
+    ArrayList<Bullet> bulletNew = new ArrayList<>();
+    //Creates objects
+    Enemy enemy1;
+    Player player1;
     public BulletManager bulletManager = new BulletManager(this);
     public GameState gameState = new GameState(this);
-    protected Menu menu = new Menu(this);
+    private Menu menu = new Menu(this);
+
     //Variables for screen size
-    int GWIDTH = 900, GHEIGHT = 700;
-    //Dimension of GWIDTH*GHEIGHT
-    Dimension screenSize = new Dimension(GWIDTH, GHEIGHT);
-    //the program isnt running yet
+    private int canvasWidth = 900, canvasHeight = 700;
+    //Dimension of canvasWidth*canvasHeight
+    private Dimension screenSize = new Dimension(canvasWidth, canvasHeight);
     public boolean running = true;
     public boolean gamePaused = true;
     // what game state is the game in
@@ -47,7 +43,7 @@ public class Main extends JFrame {
     //break bullet loops
     public boolean patternBreak = false;
     //games name
-    public String gamesName = "placeHolder";
+    String gamesName = "placeHolder";
     //main code that starts everything
     public static void main(String[] args){
             new Main();
@@ -69,8 +65,7 @@ public class Main extends JFrame {
         bulletTracker.addAll(bulletNew);
         bulletNew.clear();
         //Creates a new separate bullet ArrayList to use for drawing to deal with concurrent modification.
-        ArrayList<Bullet> bulletToDraw = new ArrayList<Bullet>();
-        bulletToDraw.addAll(bulletTracker);
+        ArrayList<Bullet> bulletToDraw = new ArrayList<Bullet>(bulletTracker);
         Runnable run = new Runnable() {
             public void run() {
                 dbImage = createImage(getWidth(), getHeight());
@@ -130,7 +125,6 @@ public class Main extends JFrame {
                 if (hittable.getHealth() <= 0){
                     gameStateI=2;
                     gamePaused = true;
-                    System.out.println(hittable.getClass().getName()+ " got game over");
                 }
             }
         };
