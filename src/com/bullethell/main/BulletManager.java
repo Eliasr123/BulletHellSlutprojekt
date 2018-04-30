@@ -13,7 +13,6 @@ public class BulletManager {
     BulletManager(Main main) {
         this.main = main;
     }
-
     public void addBullet(int x, int y, int xdir, int ydir, int bwidth, int bheight, Color bColor, HittableObjects origin, int damage){
         main.bulletNew.add(new Bullet(x,y,xdir,ydir,bwidth,bheight,bColor,origin,damage));
     }
