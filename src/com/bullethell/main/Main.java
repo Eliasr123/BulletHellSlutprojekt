@@ -112,7 +112,13 @@ public class Main extends JFrame {
                     if (hittable.coordinates.intersects(bullet.bCoordinates) && bullet.origin.getClass() != hittable.getClass()) {
                         hittable.isHit(bullet);
                         if (bullet.origin.getClass() != player1.getClass()) {
-                            bulletTrackerKilled.addAll(colisionTracker);
+                            //this goes through the bullets and on player hit only removes the enemies bullets
+                            for (Bullet bulletRemove: bulletTracker) {
+                                if (bulletRemove.origin.getClass() != player1.getClass()) {
+                                    bulletTrackerKilled.add(bulletRemove);
+                                }
+                            }
+
                         }
                         else {
                             bulletTrackerKilled.add(bullet);
