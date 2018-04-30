@@ -4,7 +4,9 @@
  * Copyright © 2018.
  */
 package com.bullethell.characters;
+
 import com.bullethell.bulletTypes.Bullet;
+
 import java.awt.*;
 public abstract class HittableObjects {
     private int health;

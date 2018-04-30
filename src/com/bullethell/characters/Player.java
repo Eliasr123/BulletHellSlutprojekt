@@ -4,8 +4,10 @@
  * Copyright © 2018.
  */
 package com.bullethell.characters;
+
 import com.bullethell.bulletTypes.BouncingBullet;
 import com.bullethell.main.Main;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;

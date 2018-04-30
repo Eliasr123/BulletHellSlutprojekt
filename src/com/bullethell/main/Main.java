@@ -5,15 +5,17 @@
  */
 
 package com.bullethell.main;
+
 import com.bullethell.bulletTypes.Bullet;
 import com.bullethell.characters.Enemy;
 import com.bullethell.characters.HittableObjects;
 import com.bullethell.characters.Player;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import javax.swing.*;
 public class Main extends JFrame {
     //Double buffering
     private Image dbImage;
@@ -60,72 +62,68 @@ public class Main extends JFrame {
         gameState.initiate();
         gameState.running();
     }
-    protected void draw() {
+    void draw() {
         //Add all the new bullets that were spawned so they can drawn and moved.
         bulletTracker.addAll(bulletNew);
         bulletNew.clear();
         //Creates a new separate bullet ArrayList to use for drawing to deal with concurrent modification.
-        ArrayList<Bullet> bulletToDraw = new ArrayList<Bullet>(bulletTracker);
-        Runnable run = new Runnable() {
-            public void run() {
-                dbImage = createImage(getWidth(), getHeight());
-                dbg = dbImage.getGraphics();
-                /** coordinates printing and bCoordinates printing */
-                dbg.drawImage(PlayFieldImage,0,0,900,700,null);
-                player1.draw(dbg);
-                enemy1.draw(dbg);
-                /** Draws all the bullets*/
-                for (Bullet trackedBullet : bulletToDraw) {
-                    if (trackedBullet != null) {
-                        dbg.setColor(trackedBullet.bColor);
-                        dbg.fillOval(trackedBullet.bCoordinates.x, trackedBullet.bCoordinates.y, trackedBullet.bCoordinates.width, trackedBullet.bCoordinates.height);
-                    }
+        ArrayList<Bullet> bulletToDraw = new ArrayList<>(bulletTracker);
+        Runnable run = () -> {
+            dbImage = createImage(getWidth(), getHeight());
+            dbg = dbImage.getGraphics();
+            /* coordinates printing and bCoordinates printing */
+            dbg.drawImage(PlayFieldImage,0,0,900,700,null);
+            player1.draw(dbg);
+            enemy1.draw(dbg);
+            /* Draws all the bullets*/
+            for (Bullet trackedBullet : bulletToDraw) {
+                if (trackedBullet != null) {
+                    dbg.setColor(trackedBullet.bColor);
+                    dbg.fillOval(trackedBullet.bCoordinates.x, trackedBullet.bCoordinates.y, trackedBullet.bCoordinates.width, trackedBullet.bCoordinates.height);
                 }
-                /** overlay*/
-                dbg.drawImage(OverlayImage,0,0,900,700,null);
-                /** Sidemenu overlay */
-                dbg.setColor(Color.WHITE);
-                dbg.setFont((new Font("TimesRoman",Font.BOLD,35)));
-                if (gameStateI > 0) {
-                    dbg.drawString("Enemy HP "+ enemy1.getHealth(), 470, 100);
-                    dbg.drawString( "Player  HP "+player1.getHealth() , 470, 146);
-                }
-                if (gamePaused) {
-                    if (gameStateI == 0) {
-                        menu.drawStart(dbg);
-                    } else if (gameStateI == 1) {
-                        menu.drawPause(dbg);
-                    } else {
-                        menu.drawEnd(dbg);
-                    }
-                }
-                getGraphics().drawImage(dbImage, 0, 0, null);
-                bulletToDraw.clear();
             }
+            /* overlay*/
+            dbg.drawImage(OverlayImage,0,0,900,700,null);
+            /* Side Menu overlay */
+            dbg.setColor(Color.WHITE);
+            dbg.setFont((new Font("TimesRoman",Font.BOLD,35)));
+            if (gameStateI > 0) {
+                dbg.drawString("Enemy HP "+ enemy1.getHealth(), 470, 100);
+                dbg.drawString( "Player  HP "+player1.getHealth() , 470, 146);
+            }
+            if (gamePaused) {
+                if (gameStateI == 0) {
+                    menu.drawStart(dbg);
+                } else if (gameStateI == 1) {
+                    menu.drawPause(dbg);
+                } else {
+                    menu.drawEnd(dbg);
+                }
+            }
+            getGraphics().drawImage(dbImage, 0, 0, null);
+            bulletToDraw.clear();
         };
         new Thread(run).start();
     }
     void collision(HittableObjects hittable, ArrayList<Bullet> colisionTracker){
-        Runnable run = new Runnable() {
-            public void run() {
-                for (Bullet bullet : colisionTracker) {
-                    if (bullet != null){
-                        if (hittable.coordinates.intersects(bullet.bCoordinates) && bullet.origin.getClass() != hittable.getClass()) {
-                            hittable.isHit(bullet);
-                            if (bullet.origin.getClass() != player1.getClass()) {
-                                bulletTrackerKilled.addAll(colisionTracker);
-                            }
-                            else {
-                                bulletTrackerKilled.add(bullet);
-                            }
-                            break;
+        Runnable run = () -> {
+            for (Bullet bullet : colisionTracker) {
+                if (bullet != null){
+                    if (hittable.coordinates.intersects(bullet.bCoordinates) && bullet.origin.getClass() != hittable.getClass()) {
+                        hittable.isHit(bullet);
+                        if (bullet.origin.getClass() != player1.getClass()) {
+                            bulletTrackerKilled.addAll(colisionTracker);
                         }
+                        else {
+                            bulletTrackerKilled.add(bullet);
+                        }
+                        break;
                     }
                 }
-                if (hittable.getHealth() <= 0){
-                    gameStateI=2;
-                    gamePaused = true;
-                }
+            }
+            if (hittable.getHealth() <= 0){
+                gameStateI=2;
+                gamePaused = true;
             }
         };
         new Thread(run).start();

@@ -4,7 +4,9 @@
  * Copyright © 2018.
  */
 package com.bullethell.bulletTypes;
+
 import com.bullethell.characters.HittableObjects;
+
 import java.awt.*;
 public class BouncingBullet extends Bullet {
     private boolean xBounce;

@@ -4,9 +4,11 @@
  * Copyright © 2018.
  */
 package com.bullethell.main;
+
 import com.bullethell.bulletTypes.Bullet;
 import com.bullethell.characters.Enemy;
 import com.bullethell.characters.Player;
+
 import java.util.ArrayList;
 public class GameState {
     private Main main;
@@ -53,7 +55,7 @@ public class GameState {
             main.draw();
             if (!main.gamePaused) {
                 //main.draw();
-                /**Checks collision, the array is to avoid concurrent modification.*/
+                /*Checks collision, the array is to avoid concurrent modification.*/
                 ArrayList<Bullet> collisionTracker = main.bulletTracker;
                 main.collision(main.enemy1, collisionTracker);
                 main.collision(main.player1, collisionTracker);
