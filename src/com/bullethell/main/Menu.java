@@ -21,19 +21,28 @@ class Menu {
         this.main = main;
     }
     void drawStart(Graphics g) {
+        String[] textLines = {"This game is was made as a school project and is", "a bullethell. Your objective, kill the enemy while dodging the",
+                "incoming bullets.","You move around with the arrowkeys and slow down by",
+                "holding down shift and pause with Escape.","only the white circle is your hitbox."};
         int width = 400;
         int height = 500;
         int heightModif =100;
+        int lineOffset =0;
         g.setColor(menuBackground);
         g.fillRect(xPos[main.gameStateI],yPos[main.gameStateI],width,height-heightModif);
         g.setColor(Color.BLACK);
         g.setFont(fontTiny);
-        g.drawString("This game is was made as a school project and is",xPos[main.gameStateI]+5,yPos[main.gameStateI]+50);
-        g.drawString("a bullethell. Your objective, kill the enemy while dodging the",xPos[main.gameStateI]+5,yPos[main.gameStateI]+65);
-        g.drawString( "incoming bullets.",xPos[main.gameStateI]+5,yPos[main.gameStateI]+80);
-        g.drawString( "You move around with the arrowkeys and slow down by",xPos[main.gameStateI]+5,yPos[main.gameStateI]+125);
-        g.drawString( "holding down shift and pause with Escape.",xPos[main.gameStateI]+5,yPos[main.gameStateI]+140);
-        g.drawString( "only the white circle is your hitbox.",xPos[main.gameStateI]+70,yPos[main.gameStateI]+160);
+        for (int i= 0;i <= 5; i++) {
+            int xPosOffset = 0;
+            if (i == 5) {
+                xPosOffset = 65;
+            }
+            g.drawString(textLines[i],xPos[main.gameStateI]+5+xPosOffset,yPos[main.gameStateI]+50+lineOffset);
+            lineOffset += 15;
+            if(i == 3){
+                lineOffset += 30;
+            }
+        }
         g.drawImage(hitBox,xPos[main.gameStateI]+5,yPos[main.gameStateI]+145,61,61,null);
         g.setFont(fontSmall);
         //extremely ugly way to do it I know, but it works.
