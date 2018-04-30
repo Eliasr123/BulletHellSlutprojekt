@@ -23,6 +23,7 @@ public class Enemy extends HittableObjects {
     public Enemy(int enemyX, int enemyY, Main main) {
         resetHealth();
         this.main = main;
+        //Creates a new Enemy Rectangle
         coordinates = new Rectangle(enemyX, enemyY,50,50);
         }
 
