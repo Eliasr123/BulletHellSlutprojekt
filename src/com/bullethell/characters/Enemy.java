@@ -25,19 +25,17 @@ public class Enemy extends HittableObjects {
         this.main = main;
         coordinates = new Rectangle(enemyX, enemyY,50,50);
         }
-        //This starts a thread and handles movement
+
     public void startThread() {
-        Runnable run = new Runnable() {
-            public void run() {
-                while(main.running) {
-                    if (!main.gamePaused) {
-                        move();
-                    }
-                    try {
-                        Thread.sleep(8);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        Runnable run = () -> {
+            while(main.running) {
+                if (!main.gamePaused) {
+                    move();
+                }
+                try {
+                    Thread.sleep(8);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         };
@@ -65,21 +63,9 @@ public class Enemy extends HittableObjects {
             chooseAttack();
         } else {
             int xDirection;
-            if (newCoordinates.x > coordinates.x) {
-                xDirection = 1;
-            } else if (newCoordinates.x < coordinates.x) {
-                xDirection = -1;
-            } else {
-                xDirection = 0;
-            }
+            xDirection = Integer.compare(newCoordinates.x, coordinates.x);
             int yDirection;
-            if (newCoordinates.y > coordinates.y) {
-                yDirection = 1;
-            } else if (newCoordinates.y < coordinates.y) {
-                yDirection = -1;
-            } else {
-                yDirection = 0;
-            }
+            yDirection = Integer.compare(newCoordinates.y, coordinates.y);
             coordinates.y += yDirection;
             coordinates.x += xDirection;
         }
@@ -94,13 +80,11 @@ public class Enemy extends HittableObjects {
             splittingAttack();
         }
     }
-    //Draws The enemy
     public void draw(Graphics g){
         g.drawImage(eIcon, coordinates.x, coordinates.y,50,50, null);
         g.setColor(new Color(255,255,255,0));
         g.fillOval(coordinates.x, coordinates.y, coordinates.width, coordinates.height);
     }
-    //Randomly choose a attack pattern.
     private void chooseAttackPattern() {
 
         int randomNumber = (int) (Math.random() * 2);
@@ -117,7 +101,7 @@ public class Enemy extends HittableObjects {
         for (int i = 0; i <= 5; i++) {
             int cModify = (int) Math.floor(Math.random() * 3);
             int damageStrong = 1;
-            /** downwards bullets */
+            /* downwards bullets */
             main.bulletManager.addBullet(new Bullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, 4, 0, bSizeXY, bSizeXY, color[cModify], this, damageStrong));
             main.bulletManager.addBullet(new Bullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, -4, 0, bSizeXY, bSizeXY, color[cModify], this, damageStrong));
 
@@ -136,7 +120,7 @@ public class Enemy extends HittableObjects {
             main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, 0, 3, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
             main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, -1, 2, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
             main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, -2, 1, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
-            /** upward bullets */
+            /* upward bullets */
             main.bulletManager.addBullet(new Bullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, 4, 0, bSizeXY, bSizeXY, color[cModify], this, damageStrong));
             main.bulletManager.addBullet(new Bullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, -4, 0, bSizeXY, bSizeXY, color[cModify], this, damageStrong));
 
