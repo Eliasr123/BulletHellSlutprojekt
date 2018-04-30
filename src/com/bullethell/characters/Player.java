@@ -10,8 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 public class Player extends HittableObjects implements Runnable {
-    //Global Variables
-    int playerXPos, playerYPos;
     private int yDirection, xDirection;
     private int cycles = 6;
     private int bulletType = 0;
@@ -22,17 +20,14 @@ public class Player extends HittableObjects implements Runnable {
     public Player(int playerXPos, int playerYPos, Main main) {
         resetHealth();
         this.main = main;
-        this.playerXPos = playerXPos;
-        this.playerYPos = playerYPos;
+        //New player rectangle
         coordinates = new Rectangle(playerXPos, playerYPos, 8, 8);
     }
     /**Player Bullet Thread for*/
     public void startPlayerBulletThread() {
-        Runnable run = new Runnable() {
-            public void run() {
-                while (main.running) {
-                    addPlayerBullets();
-                }
+        Runnable run = () -> {
+            while (main.running) {
+                addPlayerBullets();
             }
         };
         new Thread(run).start();
