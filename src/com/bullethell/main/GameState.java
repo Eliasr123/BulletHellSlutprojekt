@@ -16,9 +16,9 @@ public class GameState {
         this.main = main;
     }
     public void resetVariables() {
-        main.bulletTrackerKilled.removeAll(main.bulletTrackerKilled);
-        main.bulletTracker.removeAll(main.bulletTracker);
-        main.bulletNew.removeAll(main.bulletNew);
+        main.bulletTrackerKilled.clear();
+        main.bulletTracker.clear();
+        main.bulletNew.clear();
         main.player1.coordinates.x = 246;
         main.player1.coordinates.y = 550;
         main.player1.resetHealth();
