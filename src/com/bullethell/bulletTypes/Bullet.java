@@ -4,7 +4,9 @@
  * Copyright © 2018.
  */
 package com.bullethell.bulletTypes;
+
 import com.bullethell.characters.HittableObjects;
+
 import java.awt.*;
 public class Bullet {
     int xDirection, yDirection;
@@ -22,10 +24,10 @@ public class Bullet {
         //Create 'bCoordinates'
         bCoordinates = new Rectangle(x, y, width, height);
     }
-    protected void setXDirection(int xDir){
+    private void setXDirection(int xDir){
         xDirection = xDir;
     }
-    protected void setYDirection(int yDir){
+    private void setYDirection(int yDir){
         yDirection = yDir;
     }
     public void move(){
