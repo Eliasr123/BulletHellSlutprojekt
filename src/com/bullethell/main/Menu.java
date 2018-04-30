@@ -26,10 +26,10 @@ class Menu {
                 "holding down shift and pause with Escape.","only the white circle is your hitbox."};
         int width = 400;
         int height = 500;
-        int heightModif =100;
+        int heightMOD =100;
         int lineOffset =0;
         g.setColor(menuBackground);
-        g.fillRect(xPos[main.gameStateI],yPos[main.gameStateI],width,height-heightModif);
+        g.fillRect(xPos[main.gameStateI],yPos[main.gameStateI],width,height-heightMOD);
         g.setColor(Color.BLACK);
         g.setFont(fontTiny);
         for (int i= 0;i <= 5; i++) {
@@ -46,14 +46,14 @@ class Menu {
         g.drawImage(hitBox,xPos[main.gameStateI]+5,yPos[main.gameStateI]+145,61,61,null);
         g.setFont(fontSmall);
         //extremely ugly way to do it I know, but it works.
-        g.drawString("Keybinds: Z                 X                 C",xPos[main.gameStateI]+5,yPos[main.gameStateI]+height-120-heightModif);
-        g.drawImage(bulletTypes,xPos[main.gameStateI]+(width/2)-125,yPos[main.gameStateI]+height-200-heightModif,250,61,null);
+        g.drawString("Keybinds: Z                 X                 C",xPos[main.gameStateI]+5,yPos[main.gameStateI]+height-120-heightMOD);
+        g.drawImage(bulletTypes,xPos[main.gameStateI]+(width/2)-125,yPos[main.gameStateI]+height-200-heightMOD,250,61,null);
         g.setFont(fontMedium);
         g.drawString("Welcome to "+main.gamesName+ "!",xPos[main.gameStateI]+25,yPos[main.gameStateI]+30);
         g.setFont(fontBig);
-        g.drawString(" Press",xPos[main.gameStateI]+(width/2)-57,yPos[main.gameStateI]+height-33-heightModif);
+        g.drawString(" Press",xPos[main.gameStateI]+(width/2)-57,yPos[main.gameStateI]+height-33-heightMOD);
         g.setFont(fontSmall);
-        g.drawString("Esc to Quit                                    Enter to start",xPos[main.gameStateI]+5,yPos[main.gameStateI]+height-5-heightModif);
+        g.drawString("Esc to Quit                                    Enter to start",xPos[main.gameStateI]+5,yPos[main.gameStateI]+height-5-heightMOD);
 
     }
     void drawPause(Graphics g) {
