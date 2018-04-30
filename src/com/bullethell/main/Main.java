@@ -33,11 +33,6 @@ public class Main extends JFrame {
     public BulletManager bulletManager = new BulletManager(this);
     public GameState gameState = new GameState(this);
     private Menu menu = new Menu(this);
-
-    //Variables for screen size
-    private int canvasWidth = 900, canvasHeight = 700;
-    //Dimension of canvasWidth*canvasHeight
-    private Dimension screenSize = new Dimension(canvasWidth, canvasHeight);
     public boolean running = true;
     public boolean gamePaused = true;
     // what game state is the game in
@@ -53,6 +48,11 @@ public class Main extends JFrame {
     //Create constructor to spawn window
     public Main(){
         this.setTitle(gamesName);
+        //Dimension of canvasWidth*canvasHeight
+        //Variables for screen size
+        int canvasWidth = 900;
+        int canvasHeight = 700;
+        Dimension screenSize = new Dimension(canvasWidth, canvasHeight);
         this.setSize(screenSize);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,9 +105,9 @@ public class Main extends JFrame {
         };
         new Thread(run).start();
     }
-    void collision(HittableObjects hittable, ArrayList<Bullet> colisionTracker){
+    void collision(HittableObjects hittable, ArrayList<Bullet> collisionTracker){
         Runnable run = () -> {
-            for (Bullet bullet : colisionTracker) {
+            for (Bullet bullet : collisionTracker) {
                 if (bullet != null){
                     if (hittable.coordinates.intersects(bullet.bCoordinates) && bullet.origin.getClass() != hittable.getClass()) {
                         hittable.isHit(bullet);
