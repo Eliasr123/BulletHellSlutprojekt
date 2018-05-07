@@ -1,5 +1,5 @@
 /*
- * Code latest updated 29/04/18 13:05.
+ * Code latest updated 07/05/18 11:19.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
@@ -13,6 +13,8 @@ import com.bullethell.main.Main;
 import javax.swing.*;
 import java.awt.*;
 public class Enemy extends HittableObjects {
+    //boolean for breaking enemy patterns on game reset
+    public boolean patternBreak = false;
     //Global Variables
     private  Image eIcon = new ImageIcon("resource/characters/Enemy.png").getImage();
     private int damageNormal = 1;
@@ -148,7 +150,7 @@ public class Enemy extends HittableObjects {
                 e.printStackTrace();
             }
             //makes the enemy stop shooting if its in the middle of a pattern
-            if (main.gamePaused && main.patternBreak) {
+            if (main.gamePaused && patternBreak) {
                 break;
             }
         }
@@ -171,7 +173,7 @@ public class Enemy extends HittableObjects {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (main.gamePaused && main.patternBreak) {
+            if (main.gamePaused && patternBreak) {
                 break;
             }
         }

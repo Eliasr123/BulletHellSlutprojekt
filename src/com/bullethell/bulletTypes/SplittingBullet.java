@@ -1,11 +1,12 @@
 /*
- * Code latest updated 29/04/18 12:58.
+ * Code latest updated 07/05/18 11:38.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
 package com.bullethell.bulletTypes;
 
 import com.bullethell.characters.HittableObjects;
+import com.bullethell.main.BulletManager;
 import com.bullethell.main.Main;
 
 import java.awt.*;
@@ -44,7 +45,7 @@ public class SplittingBullet extends Bullet {
                         super.bCoordinates.width -4, super.bCoordinates.height -4,super.bColor,origin,damage,main,ticks));
             }
             if (super.bCoordinates.width > 9 && super.bCoordinates.height > 9){
-                main.bulletTrackerKilled.add(this);
+                main.bulletManager.bulletTrackerKilled.add(this);
             }
         }
         super.move();

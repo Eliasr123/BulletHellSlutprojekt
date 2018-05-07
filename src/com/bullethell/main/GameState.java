@@ -1,5 +1,5 @@
 /*
- * Code latest updated 29/04/18 15:28.
+ * Code latest updated 07/05/18 11:34.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
@@ -16,21 +16,21 @@ public class GameState {
         this.main = main;
     }
     public void resetVariables() {
-        main.bulletTrackerKilled.clear();
-        main.bulletTracker.clear();
-        main.bulletNew.clear();
+        main.bulletManager.bulletTrackerKilled.clear();
+        main.bulletManager.bulletTracker.clear();
+        main.bulletManager.bulletNew.clear();
         main.player1.coordinates.x = 246;
         main.player1.coordinates.y = 550;
         main.player1.resetHealth();
         main.enemy1.resetHealth();
-        main.patternBreak = true;
+        main.enemy1.patternBreak = true;
         main.enemy1.coordinates.x = 225;
         main.enemy1.coordinates.y = 200;
         main.enemy1.newCoordinates = null;
         main.enemy1.splittingShotReady = 10;
-        main.gameStateI = 1;
+        main.menu.gameStateI = 1;
         main.gamePaused = false;
-        main.patternBreak = false;
+        main.enemy1.patternBreak = false;
     }
     // initiates and starts needed threads and draws the canvas once
     void initiate() {
@@ -56,7 +56,7 @@ public class GameState {
             if (!main.gamePaused) {
                 //main.draw();
                 /*Checks collision, the array is to avoid concurrent modification.*/
-                ArrayList<Bullet> collisionTracker = main.bulletTracker;
+                ArrayList<Bullet> collisionTracker = new ArrayList<>(main.bulletManager.bulletTracker);
                 main.collision(main.enemy1, collisionTracker);
                 main.collision(main.player1, collisionTracker);
                 //update bullets coordinates

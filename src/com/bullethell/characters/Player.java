@@ -1,5 +1,5 @@
 /*
- * Code latest updated 29/04/18 00:13.
+ * Code latest updated 07/05/18 11:36.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
@@ -7,6 +7,7 @@ package com.bullethell.characters;
 
 import com.bullethell.bulletTypes.BouncingBullet;
 import com.bullethell.main.Main;
+import com.bullethell.main.Menu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,23 +59,23 @@ public class Player extends HittableObjects implements Runnable {
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            if (main.gameStateI == 1 && !main.gamePaused) {
+            if (main.menu.gameStateI == 1 && !main.gamePaused) {
                 main.gamePaused = true;
             } else {
                 System.exit(0);
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (main.gameStateI == 0) {
-                main.gameStateI = 1;
+            if (main.menu.gameStateI == 0) {
+                main.menu.gameStateI = 1;
                 main.gamePaused = false;
-            }else if (main.gameStateI == 1){
+            }else if (main.menu.gameStateI == 1){
                 if (main.gamePaused) {
                     main.gamePaused = false;
                 }
             }
         }
-        if (main.gameStateI != 0 && e.getKeyCode() == KeyEvent.VK_R && main.gamePaused) {
+        if (main.menu.gameStateI != 0 && e.getKeyCode() == KeyEvent.VK_R && main.gamePaused) {
             main.gameState.resetVariables();
         }
     }

@@ -1,5 +1,5 @@
 /*
- * Code latest updated 29/04/18 15:30.
+ * Code latest updated 07/05/18 11:36.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
@@ -23,22 +23,15 @@ public class Main extends JFrame {
     //playing field graphics
     private Image OverlayImage = new ImageIcon("resource/playingfield/BackgroundImg.png").getImage();
     private Image PlayFieldImage = new ImageIcon("resource/playingfield/PlayField.png").getImage();
-    //Bullet objects
-    public ArrayList<Bullet> bulletTrackerKilled = new ArrayList<>();
-    ArrayList<Bullet> bulletTracker = new ArrayList<>();
-    ArrayList<Bullet> bulletNew = new ArrayList<>();
     //Creates objects
     Enemy enemy1;
     Player player1;
-    public BulletManager bulletManager = new BulletManager(this);
+    public BulletManager bulletManager = new BulletManager();
     public GameState gameState = new GameState(this);
-    private Menu menu = new Menu(this);
+    public Menu menu = new Menu(this);
+    //game running variables
     public boolean running = true;
     public boolean gamePaused = true;
-    // what game state is the game in
-    public int gameStateI = 0;
-    //break bullet loops
-    public boolean patternBreak = false;
     //games name
     String gamesName = "placeHolder";
     //main code that starts everything
@@ -64,10 +57,10 @@ public class Main extends JFrame {
     }
     void draw() {
         //Add all the new bullets that were spawned so they can drawn and moved.
-        bulletTracker.addAll(bulletNew);
-        bulletNew.clear();
+        bulletManager.bulletTracker.addAll(bulletManager.bulletNew);
+        bulletManager.bulletNew.clear();
         //Creates a new separate bullet ArrayList to use for drawing to deal with concurrent modification.
-        ArrayList<Bullet> bulletToDraw = new ArrayList<>(bulletTracker);
+        ArrayList<Bullet> bulletToDraw = new ArrayList<>(bulletManager.bulletTracker);
         Runnable run = () -> {
             dbImage = createImage(getWidth(), getHeight());
             dbg = dbImage.getGraphics();
@@ -87,14 +80,14 @@ public class Main extends JFrame {
             /* Side Menu overlay */
             dbg.setColor(Color.WHITE);
             dbg.setFont((new Font("TimesRoman",Font.BOLD,35)));
-            if (gameStateI > 0) {
+            if (menu.gameStateI > 0) {
                 dbg.drawString("Enemy HP "+ enemy1.getHealth(), 470, 100);
                 dbg.drawString( "Player  HP "+player1.getHealth() , 470, 146);
             }
             if (gamePaused) {
-                if (gameStateI == 0) {
+                if (menu.gameStateI == 0) {
                     menu.drawStart(dbg);
-                } else if (gameStateI == 1) {
+                } else if (menu.gameStateI == 1) {
                     menu.drawPause(dbg);
                 } else {
                     menu.drawEnd(dbg);
@@ -113,22 +106,22 @@ public class Main extends JFrame {
                         hittable.isHit(bullet);
                         if (bullet.origin.getClass() != player1.getClass()) {
                             //this goes through the bullets and on player hit only removes the enemies bullets
-                            for (Bullet bulletRemove: bulletTracker) {
+                            for (Bullet bulletRemove: bulletManager.bulletTracker) {
                                 if (bulletRemove.origin.getClass() != player1.getClass()) {
-                                    bulletTrackerKilled.add(bulletRemove);
+                                    bulletManager.bulletTrackerKilled.add(bulletRemove);
                                 }
                             }
 
                         }
                         else {
-                            bulletTrackerKilled.add(bullet);
+                            bulletManager.bulletTrackerKilled.add(bullet);
                         }
                         break;
                     }
                 }
             }
             if (hittable.getHealth() <= 0){
-                gameStateI=2;
+                menu.gameStateI=2;
                 gamePaused = true;
             }
         };

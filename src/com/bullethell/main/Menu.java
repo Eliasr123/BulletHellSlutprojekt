@@ -1,12 +1,14 @@
 /*
- * Code latest updated 30/04/18 21:50.
+ * Code latest updated 07/05/18 11:35.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
 package com.bullethell.main;
 import javax.swing.*;
 import java.awt.*;
-class Menu {
+public class Menu {
+    // what game state is the game in
+    public int gameStateI = 0;
     private Main main;
     private int xPos[] = {470,250,250};
     private int yPos[] = {170,250,250};
@@ -29,7 +31,7 @@ class Menu {
         int heightMOD =100;
         int lineOffset =0;
         g.setColor(menuBackground);
-        g.fillRect(xPos[main.gameStateI],yPos[main.gameStateI],width,height-heightMOD);
+        g.fillRect(xPos[gameStateI],yPos[gameStateI],width,height-heightMOD);
         g.setColor(Color.BLACK);
         g.setFont(fontTiny);
         for (int i= 0;i <= 5; i++) {
@@ -37,23 +39,23 @@ class Menu {
             if (i == 5) {
                 xPosOffset = 65;
             }
-            g.drawString(textLines[i],xPos[main.gameStateI]+5+xPosOffset,yPos[main.gameStateI]+50+lineOffset);
+            g.drawString(textLines[i],xPos[gameStateI]+5+xPosOffset,yPos[gameStateI]+50+lineOffset);
             lineOffset += 15;
             if(i == 3){
                 lineOffset += 30;
             }
         }
-        g.drawImage(hitBox,xPos[main.gameStateI]+5,yPos[main.gameStateI]+145,61,61,null);
+        g.drawImage(hitBox,xPos[gameStateI]+5,yPos[gameStateI]+145,61,61,null);
         g.setFont(fontSmall);
         //extremely ugly way to do it I know, but it works.
-        g.drawString("Keybinds: Z                 X                 C",xPos[main.gameStateI]+5,yPos[main.gameStateI]+height-120-heightMOD);
-        g.drawImage(bulletTypes,xPos[main.gameStateI]+(width/2)-125,yPos[main.gameStateI]+height-200-heightMOD,250,61,null);
+        g.drawString("Keybinds: Z                 X                 C",xPos[gameStateI]+5,yPos[gameStateI]+height-120-heightMOD);
+        g.drawImage(bulletTypes,xPos[gameStateI]+(width/2)-125,yPos[gameStateI]+height-200-heightMOD,250,61,null);
         g.setFont(fontMedium);
-        g.drawString("Welcome to "+main.gamesName+ "!",xPos[main.gameStateI]+25,yPos[main.gameStateI]+30);
+        g.drawString("Welcome to "+main.gamesName+ "!",xPos[gameStateI]+25,yPos[gameStateI]+30);
         g.setFont(fontBig);
-        g.drawString(" Press",xPos[main.gameStateI]+(width/2)-57,yPos[main.gameStateI]+height-33-heightMOD);
+        g.drawString(" Press",xPos[gameStateI]+(width/2)-57,yPos[gameStateI]+height-33-heightMOD);
         g.setFont(fontSmall);
-        g.drawString("Esc to Quit                                    Enter to start",xPos[main.gameStateI]+5,yPos[main.gameStateI]+height-5-heightMOD);
+        g.drawString("Esc to Quit                                    Enter to start",xPos[gameStateI]+5,yPos[gameStateI]+height-5-heightMOD);
 
     }
     void drawPause(Graphics g) {
@@ -61,29 +63,29 @@ class Menu {
         int height = 200;
         g.setColor(menuBackground);
         g.setFont(fontBig);
-        g.fillRect(xPos[main.gameStateI],yPos[main.gameStateI],width,height);
+        g.fillRect(xPos[gameStateI],yPos[gameStateI],width,height);
         g.setColor(Color.BLACK);
-        g.drawString("Game Paused",xPos[main.gameStateI]+85,yPos[main.gameStateI]+30);
-        g.drawString(" Press",xPos[main.gameStateI]+(width/2)-57,yPos[main.gameStateI]+height-33);
+        g.drawString("Game Paused",xPos[gameStateI]+85,yPos[gameStateI]+30);
+        g.drawString(" Press",xPos[gameStateI]+(width/2)-57,yPos[gameStateI]+height-33);
         g.setFont(fontSmall);
-        g.drawString("Esc  to Quit       R to restart    Enter to continue",xPos[main.gameStateI]+5,yPos[main.gameStateI]+height-5);
+        g.drawString("Esc  to Quit       R to restart    Enter to continue",xPos[gameStateI]+5,yPos[gameStateI]+height-5);
     }
     void drawEnd(Graphics g) {
         int width = 400;
         int height = 200;
         g.setColor(menuBackground);
         g.setFont(fontBig);
-        g.fillRect(xPos[main.gameStateI],yPos[main.gameStateI],width,height);
+        g.fillRect(xPos[gameStateI],yPos[gameStateI],width,height);
         g.setColor(Color.BLACK);
-        g.drawString("  Game Over",xPos[main.gameStateI]+85,yPos[main.gameStateI]+30);
-        g.drawString(" Press",xPos[main.gameStateI]+(width/2)-57,yPos[main.gameStateI]+height-33);
+        g.drawString("  Game Over",xPos[gameStateI]+85,yPos[gameStateI]+30);
+        g.drawString(" Press",xPos[gameStateI]+(width/2)-57,yPos[gameStateI]+height-33);
         if (main.enemy1.getHealth() <= 0) {
-            g.drawString("You Won! ",xPos[main.gameStateI]+120,yPos[main.gameStateI]+70);
+            g.drawString("You Won! ",xPos[gameStateI]+120,yPos[gameStateI]+70);
         } else {
-            g.drawString("You Lost! ",xPos[main.gameStateI]+120,yPos[main.gameStateI]+70);
+            g.drawString("You Lost! ",xPos[gameStateI]+120,yPos[gameStateI]+70);
         }
         g.setFont(fontSmall);
         //extremely ugly way to do it I know.
-        g.drawString("Esc to Quit                                      R to Restart",xPos[main.gameStateI]+5,yPos[main.gameStateI]+height-5);
+        g.drawString("Esc to Quit                                      R to Restart",xPos[gameStateI]+5,yPos[gameStateI]+height-5);
     }
 }
