@@ -1,8 +1,9 @@
 /*
- * Code latest updated 29/04/18 12:51.
+ * Code latest updated 07/05/18 14:26.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
+/*Hittable objects is parent class of enemy and player it makes them be able to take damage and also have health */
 package com.bullethell.characters;
 
 import com.bullethell.bulletTypes.Bullet;

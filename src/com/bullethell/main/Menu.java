@@ -1,14 +1,17 @@
 /*
- * Code latest updated 07/05/18 11:35.
+ * Code latest updated 07/05/18 14:29.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
+/*The menu class object that handles ingame Menus*/
 package com.bullethell.main;
 import javax.swing.*;
 import java.awt.*;
+
 public class Menu {
     // what game state is the game in
     public int gameStateI = 0;
+    //Global Variables
     private Main main;
     private int xPos[] = {470,250,250};
     private int yPos[] = {170,250,250};

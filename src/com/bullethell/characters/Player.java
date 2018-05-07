@@ -1,13 +1,13 @@
 /*
- * Code latest updated 07/05/18 11:36.
+ * Code latest updated 07/05/18 13:13.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
+/*The player class object handles everything player related, including controls and a thread for the player itself*/
 package com.bullethell.characters;
 
 import com.bullethell.bulletTypes.BouncingBullet;
 import com.bullethell.main.Main;
-import com.bullethell.main.Menu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,14 +29,14 @@ public class Player extends HittableObjects implements Runnable {
     /**Player Bullet Thread for*/
     public void startPlayerBulletThread() {
         Runnable run = () -> {
-            while (main.running) {
+            while (main.gameState.running) {
                 addPlayerBullets();
             }
         };
         new Thread(run).start();
     }
     public void keyPressed(KeyEvent e) {
-        if (!main.gamePaused) {
+        if (!main.gameState.gamePaused) {
             if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                 setXDirection(-1);
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -59,8 +59,8 @@ public class Player extends HittableObjects implements Runnable {
             }
         }
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            if (main.menu.gameStateI == 1 && !main.gamePaused) {
-                main.gamePaused = true;
+            if (main.menu.gameStateI == 1 && !main.gameState.gamePaused) {
+                main.gameState.gamePaused = true;
             } else {
                 System.exit(0);
             }
@@ -68,14 +68,14 @@ public class Player extends HittableObjects implements Runnable {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             if (main.menu.gameStateI == 0) {
                 main.menu.gameStateI = 1;
-                main.gamePaused = false;
+                main.gameState.gamePaused = false;
             }else if (main.menu.gameStateI == 1){
-                if (main.gamePaused) {
-                    main.gamePaused = false;
+                if (main.gameState.gamePaused) {
+                    main.gameState.gamePaused = false;
                 }
             }
         }
-        if (main.menu.gameStateI != 0 && e.getKeyCode() == KeyEvent.VK_R && main.gamePaused) {
+        if (main.menu.gameStateI != 0 && e.getKeyCode() == KeyEvent.VK_R && main.gameState.gamePaused) {
             main.gameState.resetVariables();
         }
     }
@@ -130,8 +130,8 @@ public class Player extends HittableObjects implements Runnable {
     }
     @Override
     public void run() {
-        while (main.running) {
-            if (!main.gamePaused) {
+        while (main.gameState.running) {
+            if (!main.gameState.gamePaused) {
                 move();
             }
             try {

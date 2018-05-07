@@ -1,12 +1,12 @@
 /*
- * Code latest updated 07/05/18 11:38.
+ * Code latest updated 07/05/18 13:28.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
+/*Sub class of Bullet handles Splitting bullets and its logic */
 package com.bullethell.bulletTypes;
 
 import com.bullethell.characters.HittableObjects;
-import com.bullethell.main.BulletManager;
 import com.bullethell.main.Main;
 
 import java.awt.*;
@@ -25,6 +25,7 @@ public class SplittingBullet extends Bullet {
     public void move() {
         ticks--;
         if (ticks == 0) {
+            //after Ticks amount of time bullet will split into more smaller bullets
             if (super.bCoordinates.width > 9 && super.bCoordinates.height > 9)  {
                 ticks =(int)ceil(initialTicks * 1.6);
                 main.bulletManager.addBullet(new SplittingBullet(super.bCoordinates.x, super.bCoordinates.y, -2,0,

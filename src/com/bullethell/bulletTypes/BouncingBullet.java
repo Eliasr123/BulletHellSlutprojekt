@@ -1,8 +1,9 @@
 /*
- * Code latest updated 29/04/18 12:55.
+ * Code latest updated 07/05/18 13:24.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
+/*Sub class of Bullet it makes bullets that bounce*/
 package com.bullethell.bulletTypes;
 
 import com.bullethell.characters.HittableObjects;

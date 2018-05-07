@@ -1,8 +1,9 @@
 /*
- * Code latest updated 29/04/18 12:57.
+ * Code latest updated 07/05/18 14:31.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
+/*Bullet object handles has movement logic and the object itself with values needed, is also parent class of SplittingBullet and BouncingBullet*/
 package com.bullethell.bulletTypes;
 
 import com.bullethell.characters.HittableObjects;

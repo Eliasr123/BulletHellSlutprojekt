@@ -1,9 +1,9 @@
 /*
- * Code latest updated 07/05/18 11:36.
+ * Code latest updated 07/05/18 14:29.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
-
+/*Starts the game and handles most of the global variables needed across the game as well as being the drawing the Canvas*/
 package com.bullethell.main;
 
 import com.bullethell.bulletTypes.Bullet;
@@ -17,9 +17,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 public class Main extends JFrame {
-    //Double buffering
-    private Image dbImage;
-    private Graphics dbg;
+
     //playing field graphics
     private Image OverlayImage = new ImageIcon("resource/playingfield/BackgroundImg.png").getImage();
     private Image PlayFieldImage = new ImageIcon("resource/playingfield/PlayField.png").getImage();
@@ -29,23 +27,17 @@ public class Main extends JFrame {
     public BulletManager bulletManager = new BulletManager();
     public GameState gameState = new GameState(this);
     public Menu menu = new Menu(this);
-    //game running variables
-    public boolean running = true;
-    public boolean gamePaused = true;
     //games name
     String gamesName = "placeHolder";
-    //main code that starts everything
+
     public static void main(String[] args){
             new Main();
     }
     //Create constructor to spawn window
     public Main(){
         this.setTitle(gamesName);
-        //Dimension of canvasWidth*canvasHeight
-        //Variables for screen size
-        int canvasWidth = 900;
-        int canvasHeight = 700;
-        Dimension screenSize = new Dimension(canvasWidth, canvasHeight);
+        //Dimension of windows width x height.
+        Dimension screenSize = new Dimension(900, 700);
         this.setSize(screenSize);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,8 +54,8 @@ public class Main extends JFrame {
         //Creates a new separate bullet ArrayList to use for drawing to deal with concurrent modification.
         ArrayList<Bullet> bulletToDraw = new ArrayList<>(bulletManager.bulletTracker);
         Runnable run = () -> {
-            dbImage = createImage(getWidth(), getHeight());
-            dbg = dbImage.getGraphics();
+            Image dbImage = createImage(getWidth(), getHeight());
+            Graphics dbg = dbImage.getGraphics();
             /* coordinates printing and bCoordinates printing */
             dbg.drawImage(PlayFieldImage,0,0,900,700,null);
             player1.draw(dbg);
@@ -84,7 +76,7 @@ public class Main extends JFrame {
                 dbg.drawString("Enemy HP "+ enemy1.getHealth(), 470, 100);
                 dbg.drawString( "Player  HP "+player1.getHealth() , 470, 146);
             }
-            if (gamePaused) {
+            if (gameState.gamePaused) {
                 if (menu.gameStateI == 0) {
                     menu.drawStart(dbg);
                 } else if (menu.gameStateI == 1) {
@@ -99,7 +91,6 @@ public class Main extends JFrame {
         new Thread(run).start();
     }
     void collision(HittableObjects hittable, ArrayList<Bullet> collisionTracker){
-        Runnable run = () -> {
             for (Bullet bullet : collisionTracker) {
                 if (bullet != null){
                     if (hittable.coordinates.intersects(bullet.bCoordinates) && bullet.origin.getClass() != hittable.getClass()) {
@@ -122,10 +113,8 @@ public class Main extends JFrame {
             }
             if (hittable.getHealth() <= 0){
                 menu.gameStateI=2;
-                gamePaused = true;
+                gameState.gamePaused = true;
             }
-        };
-        new Thread(run).start();
     }
     public class Key implements KeyListener {
         @Override
