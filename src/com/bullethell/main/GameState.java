@@ -1,9 +1,9 @@
 /*
- * Code latest updated 07/05/18 12:53.
+ * Code latest updated 07/05/18 14:50.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
-/*GameState handles different game states, in startup phase, in running phase, when games need a reset*/
+/*GameState handles different game states, in startup phase, in gameRunning phase, when games need a reset*/
 package com.bullethell.main;
 
 import com.bullethell.bulletTypes.Bullet;
@@ -12,10 +12,14 @@ import com.bullethell.characters.Player;
 
 import java.util.ArrayList;
 public class GameState {
-    //game running variables
-    public boolean running = true;
+    //game gameRunning variables
+    public boolean gameRunning = true;
     public boolean gamePaused = true;
     private Main main;
+
+
+    private long previousMillis = 0;
+    private final long interval = 16;
     GameState(Main main) {
         this.main = main;
     }
@@ -33,21 +37,22 @@ public class GameState {
     }
     //Main loop
     void running() {
-        while (running) {
-            try {
-                Thread.sleep(16);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            main.draw();
-            if (!gamePaused) {
-                //main.draw();
-                /*Checks collision, the array is to avoid concurrent modification.*/
-                ArrayList<Bullet> collisionTracker = new ArrayList<>(main.bulletManager.bulletTracker);
-                main.collision(main.enemy1, collisionTracker);
-                main.collision(main.player1, collisionTracker);
-                //update bullets coordinates
-                main.bulletManager.updateBullet();
+
+        while (gameRunning) {
+            long currentMillis = System.currentTimeMillis();
+            if (currentMillis - previousMillis >= interval) {
+                previousMillis = currentMillis;
+                main.draw();
+                if (!gamePaused) {
+                    //main.draw();
+                    /*Checks collision, the array is to avoid concurrent modification.*/
+                    ArrayList<Bullet> collisionTracker = new ArrayList<>(main.bulletManager.bulletTracker);
+                    main.collision(main.enemy1, collisionTracker);
+                    main.collision(main.player1, collisionTracker);
+                    //update bullets coordinates
+                    main.bulletManager.updateBullet();
+                }
+
             }
         }
     }
