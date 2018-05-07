@@ -1,5 +1,5 @@
 /*
- * Code latest updated 07/05/18 13:13.
+ * Code latest updated 07/05/18 14:42.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
@@ -29,7 +29,7 @@ public class Player extends HittableObjects implements Runnable {
     /**Player Bullet Thread for*/
     public void startPlayerBulletThread() {
         Runnable run = () -> {
-            while (main.gameState.running) {
+            while (main.gameState.gameRunning) {
                 addPlayerBullets();
             }
         };
@@ -130,7 +130,7 @@ public class Player extends HittableObjects implements Runnable {
     }
     @Override
     public void run() {
-        while (main.gameState.running) {
+        while (main.gameState.gameRunning) {
             if (!main.gameState.gamePaused) {
                 move();
             }

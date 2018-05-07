@@ -1,5 +1,5 @@
 /*
- * Code latest updated 07/05/18 14:24.
+ * Code latest updated 07/05/18 14:42.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
@@ -34,7 +34,7 @@ public class Enemy extends HittableObjects {
 
     public void startThread() {
         Runnable run = () -> {
-            while(main.gameState.running) {
+            while(main.gameState.gameRunning) {
                 if (!main.gameState.gamePaused) {
                     move();
                 }
