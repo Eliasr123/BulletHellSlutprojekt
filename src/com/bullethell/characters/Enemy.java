@@ -1,8 +1,9 @@
 /*
- * Code latest updated 07/05/18 11:19.
+ * Code latest updated 07/05/18 14:24.
  * Written  By Elias Renman.
  * Copyright © 2018.
  */
+/*the enemy class object handles everything related to the enemy*/
 package com.bullethell.characters;
 
 import com.bullethell.bulletTypes.BouncingBullet;
@@ -33,8 +34,8 @@ public class Enemy extends HittableObjects {
 
     public void startThread() {
         Runnable run = () -> {
-            while(main.running) {
-                if (!main.gamePaused) {
+            while(main.gameState.running) {
+                if (!main.gameState.gamePaused) {
                     move();
                 }
                 try {
@@ -106,51 +107,28 @@ public class Enemy extends HittableObjects {
         for (int i = 0; i <= 5; i++) {
             int cModify = (int) Math.floor(Math.random() * 3);
             int damageStrong = 1;
-            /* downwards bullets */
-            main.bulletManager.addBullet(new Bullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, 4, 0, bSizeXY, bSizeXY, color[cModify], this, damageStrong));
-            main.bulletManager.addBullet(new Bullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, -4, 0, bSizeXY, bSizeXY, color[cModify], this, damageStrong));
-
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, 3, 1, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, 2, 2, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, 1, 3, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, 0, 4, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, -1, 3, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, -2, 2, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, -3, 1, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
-
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, 2, 1, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, 1, 2, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, 0, 3, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, 0, 4, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, 0, 3, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, -1, 2, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, -2, 1, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
-            /* upward bullets */
-            main.bulletManager.addBullet(new Bullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, 4, 0, bSizeXY, bSizeXY, color[cModify], this, damageStrong));
-            main.bulletManager.addBullet(new Bullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, -4, 0, bSizeXY, bSizeXY, color[cModify], this, damageStrong));
-
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, 3, -1, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, 2, -2, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, 1, -3, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, 0, -4, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, -1, -3, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, -2, -2, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, -3, -1, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
-
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, 2, -1, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, 1, -2, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, 0, -3, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, 0, -4, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, 0, -3, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, -1, -2, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
-            main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, -2, -1, bSizeXY, bSizeXY, color[cModify], true, true, this, damageStrong));
+            //bullet directions
+            int[] xDirA = {3,2,1,0,-1,-2,-3,2,1,0,0,0,-1,-2};
+            int[] yDirA ={1,2,3,4,3,2,1,1,2,3,4,3,2,1};
+            //sends out bouncing bullets in different directions
+            for (int j= 0; j < xDirA.length; j++) {
+                main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, xDirA[j], yDirA[j], bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
+                main.bulletManager.addBullet(new BouncingBullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, xDirA[j], yDirA[j]*-1, bSizeXY, bSizeXY, color[cModify], true, false, this, damageStrong));
+            }
+            int xDir = 4;
+            //creates 4 regular bullets that go sideways to avoid bullets that bounce on the walls forever
+            for (int j= 0; j <= 1; j++) {
+                main.bulletManager.addBullet(new Bullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + yOffset, xDir, 0, bSizeXY, bSizeXY, color[cModify], this, damageStrong));
+                main.bulletManager.addBullet(new Bullet(coordinates.x + xOffset-(bSizeXY/2), coordinates.y + upYOffset, xDir, 0, bSizeXY, bSizeXY, color[cModify], this, damageStrong));
+                xDir = xDir*-1;
+            }
             try {
                 Thread.sleep(70);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             //makes the enemy stop shooting if its in the middle of a pattern
-            if (main.gamePaused && patternBreak) {
+            if (main.gameState.gamePaused && patternBreak) {
                 break;
             }
         }
@@ -173,7 +151,7 @@ public class Enemy extends HittableObjects {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (main.gamePaused && patternBreak) {
+            if (main.gameState.gamePaused && patternBreak) {
                 break;
             }
         }
